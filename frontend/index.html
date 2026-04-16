@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Network Monitoring & Incident Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">Operations Center</p>
+          <h1>Network Monitoring</h1>
+          <p class="sidebar-copy">
+            Real-time visibility into critical network infrastructure, link
+            health and incident activity.
+          </p>
+        </div>
+
+        <div class="sidebar-panel">
+          <h2>Fleet Summary</h2>
+          <div class="summary-stats">
+            <div>
+              <span id="device-count">0</span>
+              <small>Devices</small>
+            </div>
+            <div>
+              <span id="online-count">0</span>
+              <small>Online</small>
+            </div>
+            <div>
+              <span id="offline-count">0</span>
+              <small>Offline</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="dashboard">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Live Dashboard</p>
+            <h2>Infrastructure Health Overview</h2>
+          </div>
+          <form id="device-form" class="device-form">
+            <input type="text" name="name" placeholder="Device name" required />
+            <select name="type" required>
+              <option value="router">Router</option>
+              <option value="switch">Switch</option>
+              <option value="link">Link</option>
+            </select>
+            <select name="status" required>
+              <option value="online">Online</option>
+              <option value="offline">Offline</option>
+            </select>
+            <button type="submit">Add Device</button>
+          </form>
+        </header>
+
+        <section class="content-grid">
+          <section>
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Devices</p>
+                <h3>Monitored Infrastructure</h3>
+              </div>
+            </div>
+            <div id="device-grid" class="device-grid"></div>
+          </section>
+
+          <section class="incident-section">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Incidents</p>
+                <h3>Recent Network Events</h3>
+              </div>
+            </div>
+            <div class="incident-panel">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Device</th>
+                    <th>Issue</th>
+                    <th>Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody id="incident-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

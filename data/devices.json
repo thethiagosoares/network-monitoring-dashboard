@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1001",
+    "name": "Core Router Alpha",
+    "type": "router",
+    "status": "online"
+  },
+  {
+    "id": "1002",
+    "name": "Access Switch Delta",
+    "type": "switch",
+    "status": "online"
+  },
+  {
+    "id": "1003",
+    "name": "WAN Link Primary",
+    "type": "link",
+    "status": "offline"
+  }
+]

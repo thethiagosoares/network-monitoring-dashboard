@@ -1,0 +1,21 @@
+{
+  "name": "network-monitoring-incident-dashboard",
+  "version": "1.0.0",
+  "description": "Professional Node.js dashboard for monitoring network devices and tracking incidents.",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node --watch backend/server.js"
+  },
+  "keywords": [
+    "network-monitoring",
+    "incident-dashboard",
+    "express",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
