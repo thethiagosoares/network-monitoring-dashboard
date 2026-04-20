@@ -1,7 +1,7 @@
 {
   "name": "network-monitoring-incident-dashboard",
-  "version": "1.0.0",
-  "description": "Professional Node.js dashboard for monitoring network devices and tracking incidents.",
+  "version": "2.0.0",
+  "description": "Professional Node.js dashboard for monitoring network devices, authentication, and advanced incident logging.",
   "main": "backend/server.js",
   "scripts": {
     "start": "node backend/server.js",
@@ -11,11 +11,16 @@
     "network-monitoring",
     "incident-dashboard",
     "express",
-    "nodejs"
+    "jwt",
+    "uptime"
   ],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.21.2"
+    "axios": "^1.9.0",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "ping": "^1.0.0"
   }
 }

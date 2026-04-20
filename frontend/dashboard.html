@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Network Monitoring Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="zbx-shell">
+      <header class="zbx-topline">
+        <div class="brand-block">
+          <strong>NETWORK OPS</strong>
+          <span>Monitoring • Maps • Logs</span>
+        </div>
+        <nav class="top-menu">
+          <a href="#">Monitoring</a>
+          <a href="#">Inventory</a>
+          <a href="#">Reports</a>
+          <a href="#">Configuration</a>
+          <a href="#">Administration</a>
+        </nav>
+        <div class="operator-actions">
+          <span id="operator-name">Loading...</span>
+          <button id="logout-button" class="ghost-button" type="button">Logout</button>
+        </div>
+      </header>
+
+      <div class="zbx-subline">
+        <div class="subline-left">
+          <span class="eyebrow">Live Network Map</span>
+          <h1>Infrastructure Topology</h1>
+        </div>
+        <div class="subline-right">
+          <article>
+            <span id="device-count">0</span>
+            <small>Devices</small>
+          </article>
+          <article>
+            <span id="online-count">0</span>
+            <small>Online</small>
+          </article>
+          <article>
+            <span id="offline-count">0</span>
+            <small>Offline</small>
+          </article>
+          <article>
+            <span id="average-latency">0 ms</span>
+            <small>Avg latency</small>
+          </article>
+        </div>
+      </div>
+
+      <main class="zbx-main">
+        <section class="map-panel panel-frame">
+          <div class="map-toolbar">
+            <div>
+              <p class="eyebrow">Map</p>
+              <h2>Core and access paths</h2>
+            </div>
+            <div class="map-legend">
+              <span><i class="dot online"></i> Online</span>
+              <span><i class="dot offline"></i> Offline</span>
+              <span><i class="wire"></i> Link</span>
+            </div>
+          </div>
+          <div id="topology-stage" class="topology-stage">
+            <svg id="topology-svg" class="topology-svg" viewBox="0 0 1000 620" preserveAspectRatio="none"></svg>
+            <div id="topology-nodes" class="topology-nodes"></div>
+          </div>
+        </section>
+
+        <aside class="ops-panel">
+          <section class="panel-frame">
+            <div class="section-heading">
+              <p class="eyebrow">Provisioning</p>
+              <h3>Add monitored device</h3>
+            </div>
+            <form id="device-form" class="device-form zbx-form">
+              <input type="text" name="name" placeholder="Device name" required />
+              <select name="type" required>
+                <option value="router">Router</option>
+                <option value="switch">Switch</option>
+                <option value="link">Link</option>
+              </select>
+              <select name="checkType" required>
+                <option value="ping">Ping</option>
+                <option value="http">HTTP/API</option>
+              </select>
+              <input type="text" name="target" placeholder="127.0.0.1 or https://example.com/health" required />
+              <select name="status" required>
+                <option value="online">Online</option>
+                <option value="offline">Offline</option>
+              </select>
+              <button type="submit">Add Device</button>
+            </form>
+          </section>
+
+          <section class="panel-frame">
+            <div class="section-heading">
+              <p class="eyebrow">Incident Stream</p>
+              <h3>Recent disruptions</h3>
+            </div>
+            <div class="table-panel compact-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Device</th>
+                    <th>Event</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
+                <tbody id="incident-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+        </aside>
+      </main>
+
+      <section class="zbx-bottom">
+        <section class="panel-frame">
+          <div class="section-heading split-heading">
+            <div>
+              <p class="eyebrow">Devices</p>
+              <h3>Reachability and response</h3>
+            </div>
+          </div>
+          <div id="device-grid" class="device-grid"></div>
+        </section>
+
+        <section class="panel-frame">
+          <div class="section-heading split-heading">
+            <div>
+              <p class="eyebrow">Advanced Event Log</p>
+              <h3>Structured operational events</h3>
+            </div>
+          </div>
+
+          <form id="log-filter-form" class="filter-grid">
+            <select id="log-device-filter" name="device">
+              <option value="">All devices</option>
+            </select>
+            <select id="log-severity-filter" name="severity">
+              <option value="">All severities</option>
+              <option value="HIGH">High</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="LOW">Low</option>
+            </select>
+            <select id="log-time-filter" name="sinceMinutes">
+              <option value="">All time</option>
+              <option value="15">Last 15 min</option>
+              <option value="60">Last 60 min</option>
+              <option value="240">Last 4 hours</option>
+              <option value="1440">Last 24 hours</option>
+            </select>
+            <button type="submit">Apply Filters</button>
+          </form>
+
+          <div class="table-panel">
+            <table>
+              <thead>
+                <tr>
+                  <th>Device</th>
+                  <th>Severity</th>
+                  <th>Type</th>
+                  <th>Latency</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="log-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

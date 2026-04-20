@@ -1,11 +1,11 @@
-const { listIncidents } = require('../services/incidentService');
+const { listIncidents } = require('../services/logService');
 
-async function getIncidents(_req, res) {
+async function getIncidents(req, res) {
   try {
-    const incidents = await listIncidents();
-    res.json(incidents);
-  } catch (error) {
-    res.status(500).json({ message: 'Failed to load incidents.' });
+    const incidents = await listIncidents(req.query);
+    return res.json(incidents);
+  } catch (_error) {
+    return res.status(500).json({ message: 'Failed to load incidents.' });
   }
 }
 

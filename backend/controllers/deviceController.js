@@ -1,32 +1,27 @@
 const {
-  listDevices,
   addDevice,
+  listDevices,
   updateDevice
 } = require('../services/deviceService');
 
 async function getDevices(_req, res) {
   try {
     const devices = await listDevices();
-    res.json(devices);
-  } catch (error) {
-    res.status(500).json({ message: 'Failed to load devices.' });
+    return res.json(devices);
+  } catch (_error) {
+    return res.status(500).json({ message: 'Failed to load devices.' });
   }
 }
 
 async function createDevice(req, res) {
   try {
-    const { name, type, status } = req.body;
-
-    if (!name || !type || !status) {
-      return res.status(400).json({
-        message: 'name, type and status are required.'
-      });
-    }
-
-    const device = await addDevice({ name, type, status });
+    const device = await addDevice(req.body);
     return res.status(201).json(device);
   } catch (error) {
-    if (error.message === 'INVALID_STATUS' || error.message === 'INVALID_TYPE') {
+    if (
+      error.message.startsWith('INVALID_') ||
+      error.message === 'MISSING_TARGET'
+    ) {
       return res.status(400).json({ message: error.message });
     }
 
@@ -37,13 +32,10 @@ async function createDevice(req, res) {
 async function updateDeviceStatus(req, res) {
   try {
     const { id } = req.params;
-    const { status } = req.body;
-
-    if (!status) {
-      return res.status(400).json({ message: 'status is required.' });
-    }
-
-    const updatedDevice = await updateDevice(id, { status });
+    const updatedDevice = await updateDevice(id, req.body, {
+      source: 'manual',
+      actor: req.user.username
+    });
 
     if (!updatedDevice) {
       return res.status(404).json({ message: 'Device not found.' });
@@ -51,7 +43,7 @@ async function updateDeviceStatus(req, res) {
 
     return res.json(updatedDevice);
   } catch (error) {
-    if (error.message === 'INVALID_STATUS') {
+    if (error.message.startsWith('INVALID_')) {
       return res.status(400).json({ message: error.message });
     }
 

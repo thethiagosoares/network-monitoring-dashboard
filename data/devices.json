@@ -3,18 +3,33 @@
     "id": "1001",
     "name": "Core Router Alpha",
     "type": "router",
-    "status": "online"
+    "status": "online",
+    "checkType": "ping",
+    "target": "127.0.0.1",
+    "latency": 1,
+    "lastCheckedAt": "2026-04-20T16:57:39.631Z",
+    "lastError": null
   },
   {
     "id": "1002",
     "name": "Access Switch Delta",
     "type": "switch",
-    "status": "online"
+    "status": "online",
+    "checkType": "http",
+    "target": "http://127.0.0.1:3000/probe/switch-core",
+    "latency": 10,
+    "lastCheckedAt": "2026-04-20T16:57:39.648Z",
+    "lastError": null
   },
   {
     "id": "1003",
     "name": "WAN Link Primary",
     "type": "link",
-    "status": "offline"
+    "status": "offline",
+    "checkType": "http",
+    "target": "http://127.0.0.1:3999/unreachable",
+    "latency": 8,
+    "lastCheckedAt": "2026-04-20T16:57:39.662Z",
+    "lastError": "connect ECONNREFUSED 127.0.0.1:3999"
   }
 ]

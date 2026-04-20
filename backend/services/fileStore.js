@@ -9,6 +9,7 @@ async function ensureFile(fileName, defaultValue) {
   try {
     await fs.access(filePath);
   } catch (_error) {
+    await fs.mkdir(dataDirectory, { recursive: true });
     await fs.writeFile(filePath, JSON.stringify(defaultValue, null, 2));
   }
 

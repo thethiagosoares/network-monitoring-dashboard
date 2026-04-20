@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Network Monitoring & Incident Dashboard</title>
+    <title>Login | Network Monitoring</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -12,93 +12,71 @@
     />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <div class="app-shell">
-      <aside class="sidebar">
-        <div>
-          <p class="eyebrow">Operations Center</p>
-          <h1>Network Monitoring</h1>
-          <p class="sidebar-copy">
-            Real-time visibility into critical network infrastructure, link
-            health and incident activity.
-          </p>
-        </div>
-
-        <div class="sidebar-panel">
-          <h2>Fleet Summary</h2>
-          <div class="summary-stats">
-            <div>
-              <span id="device-count">0</span>
-              <small>Devices</small>
-            </div>
-            <div>
-              <span id="online-count">0</span>
-              <small>Online</small>
-            </div>
-            <div>
-              <span id="offline-count">0</span>
-              <small>Offline</small>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      <main class="dashboard">
-        <header class="topbar">
+  <body class="auth-body">
+    <main class="auth-layout">
+      <section class="auth-hero">
+        <p class="eyebrow">Secure Operations Console</p>
+        <h1>Authenticate to access live infrastructure monitoring.</h1>
+        <p class="auth-copy">
+          Track device reachability, monitor latency, simulate failures and review
+          structured network events from a single operational workspace.
+        </p>
+        <div class="auth-hero-grid">
           <div>
-            <p class="eyebrow">Live Dashboard</p>
-            <h2>Infrastructure Health Overview</h2>
+            <span>10s</span>
+            <small>Automated health checks</small>
           </div>
-          <form id="device-form" class="device-form">
-            <input type="text" name="name" placeholder="Device name" required />
-            <select name="type" required>
-              <option value="router">Router</option>
-              <option value="switch">Switch</option>
-              <option value="link">Link</option>
-            </select>
-            <select name="status" required>
-              <option value="online">Online</option>
-              <option value="offline">Offline</option>
-            </select>
-            <button type="submit">Add Device</button>
-          </form>
-        </header>
+          <div>
+            <span>JWT</span>
+            <small>Protected API access</small>
+          </div>
+          <div>
+            <span>Logs</span>
+            <small>Severity-aware event stream</small>
+          </div>
+        </div>
+      </section>
 
-        <section class="content-grid">
-          <section>
-            <div class="section-heading">
-              <div>
-                <p class="eyebrow">Devices</p>
-                <h3>Monitored Infrastructure</h3>
-              </div>
-            </div>
-            <div id="device-grid" class="device-grid"></div>
-          </section>
+      <section class="auth-panel">
+        <div class="auth-panel-header">
+          <p class="eyebrow">Account Access</p>
+          <h2>Login or create an operator account</h2>
+          <p class="muted-copy">Register once, then use the same credentials to access the dashboard.</p>
+        </div>
 
-          <section class="incident-section">
-            <div class="section-heading">
-              <div>
-                <p class="eyebrow">Incidents</p>
-                <h3>Recent Network Events</h3>
-              </div>
-            </div>
-            <div class="incident-panel">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Device</th>
-                    <th>Issue</th>
-                    <th>Timestamp</th>
-                  </tr>
-                </thead>
-                <tbody id="incident-table-body"></tbody>
-              </table>
-            </div>
-          </section>
-        </section>
-      </main>
-    </div>
+        <div class="auth-tabs">
+          <button class="tab-button active" data-tab="login">Login</button>
+          <button class="tab-button" data-tab="register">Register</button>
+        </div>
 
-    <script src="app.js"></script>
+        <form id="login-form" class="auth-form active" data-form="login">
+          <label>
+            <span>Username</span>
+            <input type="text" name="username" placeholder="operator" required />
+          </label>
+          <label>
+            <span>Password</span>
+            <input type="password" name="password" placeholder="••••••••" required />
+          </label>
+          <button type="submit">Login</button>
+        </form>
+
+        <form id="register-form" class="auth-form" data-form="register">
+          <label>
+            <span>Username</span>
+            <input type="text" name="username" placeholder="new operator" required />
+          </label>
+          <label>
+            <span>Password</span>
+            <input type="password" name="password" placeholder="Create a secure password" required />
+          </label>
+          <button type="submit">Create Account</button>
+        </form>
+
+        <p id="auth-message" class="auth-message"></p>
+      </section>
+    </main>
+
+    <script src="auth.js"></script>
   </body>
 </html>
